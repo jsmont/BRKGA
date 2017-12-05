@@ -4,14 +4,15 @@
 #include<vector>
 using namespace std;
 
-typedef int (*FitnessFunction)(vector<float>); 
+typedef float (*FitnessFunction)(vector<float>); 
 
 typedef struct Individual{
     vector<float> chromosome;
-    int fitness;
+    float fitness;
     //Individual();
     Individual(int chromosomeLength);
     void print();
+    bool operator>(const Individual& other) const;
 } Individual;
 
 class Brkga {
@@ -31,9 +32,9 @@ public:
 
     Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessFunction fitness);
 
-    vector<int> run(int numIterations);
+    float run(int numIterations);
 
-    vector<int> getBest();
+    vector<float> getBest();
 
 private:
 
@@ -43,12 +44,16 @@ private:
     vector<Individual> assignFitness(vector<Individual> population);
 
     vector<Individual> createNewGeneration(vector<Individual> population);
-    vector<Individual> getElite(vector<Individual> population);
+/*    vector<Individual> getElite(vector<Individual> population);
     vector<Individual> getNormies(vector<Individual> population);
 
     vector<Individual> crossoverNormies(vector<Individual> elite, vector<Individual> normies, int numRemixed);
 
     Individual crossoverNormie(Individual elite, Individual normie);
+*/
+    float getBestFitness(vector<Individual> population);
+
+    void inspectPopulation(vector<Individual> population);
     
 };
 

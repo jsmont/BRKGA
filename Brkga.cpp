@@ -1,6 +1,7 @@
 #include "Brkga.h"
 #include <cstdlib>
-#include<iostream>
+#include <iostream>
+#include <algorithm>
 
 Individual::Individual(int chromosomeLength){
     chromosome = vector<float>(chromosomeLength);
@@ -15,7 +16,7 @@ Individual::Individual(int chromosomeLength){
 }
 
 void Individual::print(){
-    
+
    cout << "Chromosome:\t";
    if(chromosome.size() > 0){
        cout << "[ " << chromosome[0] << " ";
@@ -29,6 +30,10 @@ void Individual::print(){
    cout << "Fitness:\t" << fitness << endl;
 }
 
+bool Individual::operator>(const Individual& other) const{
+    return fitness < other.fitness;
+}
+
 Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessFunction fitness){
     
     this->chromosomeLength = chromosomeLength;
@@ -39,6 +44,7 @@ Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNorm
 
     this->population = createMutants(populationSize);
 
+    this->population = rankIndividuals(this->population);
 }
 
 
@@ -66,20 +72,91 @@ vector<Individual> Brkga::createMutants(int number){
 }
 
 
-vector<int> run(int numIterations);
+float Brkga::run(int numIterations){
+    
+    for (int i = 0; i < numIterations; ++i){
+    
+        this->population = createNewGeneration(this->population);
 
-    vector<int> getBest();
+        this->population = rankIndividuals(this->population);
+
+#ifdef VITERATION
+        cout << endl <<  "[VERBOSE ITERATION]" << endl;
+        inspectPopulation(population);
+#endif 
+    }
+
+    return getBestFitness(this->population);
+
+}
 
 
-    vector<Individual> createMutants(int number);
+vector<Individual> Brkga::rankIndividuals(vector<Individual> population){
 
-    vector<Individual> rankIndividuals(vector<Individual> population);
-    vector<Individual> assignFitness(vector<Individual> population);
+    population = assignFitness(population);
 
-    vector<Individual> createNewGeneration(vector<Individual> population);
+    sort(population.begin(), population.end(), std::greater<>());
+
+#ifdef VRANK
+    cout << endl <<  "[VERBOSE RANK]" << endl;
+    inspectPopulation(population);
+#endif
+
+    return population;
+}
+
+vector<Individual> Brkga::assignFitness(vector<Individual> population){
+
+    for(int i = 0; i < population.size(); ++i){
+    
+        population[i].fitness = this->fitness(population[i].chromosome);
+
+    }
+
+#ifdef VFITNESS
+    cout << endl <<  "[VERBOSE FITNESS]" << endl;
+    inspectPopulation(population);
+#endif 
+
+    return population;
+
+}
+
+vector<Individual> Brkga::createNewGeneration(vector<Individual> population){
+
+    return population;
+
+}
+
+/*
     vector<Individual> getElite(vector<Individual> population);
     vector<Individual> getNormies(vector<Individual> population);
 
     vector<Individual> crossoverNormies(vector<Individual> elite, vector<Individual> normies, int numRemixed);
 
     Individual crossoverNormie(Individual elite, Individual normie);
+*/
+
+float Brkga::getBestFitness(vector<Individual> population){
+
+    return population[0].fitness;
+
+}
+
+vector<float> Brkga::getBest(){
+
+    return this->population[0].chromosome;
+
+}
+
+void Brkga::inspectPopulation(vector<Individual> population){
+
+    for(int i = 0; i < population.size(); ++i){
+    
+        cout << "[Individual " << i << " ]" << endl;
+
+        population[i].print();
+
+    }
+
+}
