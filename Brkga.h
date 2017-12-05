@@ -11,7 +11,7 @@ typedef struct Individual{
     int fitness;
     //Individual();
     Individual(int chromosomeLength);
-    print();
+    void print();
 } Individual;
 
 class Brkga {
@@ -30,15 +30,15 @@ class Brkga {
 public:
 
     Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessFunction fitness);
-/*
+
     vector<int> run(int numIterations);
 
     vector<int> getBest();
-*/
+
 private:
 
     vector<Individual> createMutants(int number);
-/*
+
     vector<Individual> rankIndividuals(vector<Individual> population);
     vector<Individual> assignFitness(vector<Individual> population);
 
@@ -49,7 +49,7 @@ private:
     vector<Individual> crossoverNormies(vector<Individual> elite, vector<Individual> normies, int numRemixed);
 
     Individual crossoverNormie(Individual elite, Individual normie);
-*/
+    
 };
 
 #endif

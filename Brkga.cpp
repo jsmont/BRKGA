@@ -1,6 +1,6 @@
 #include "Brkga.h"
 #include <cstdlib>
-#include<stdio>
+#include<iostream>
 
 Individual::Individual(int chromosomeLength){
     chromosome = vector<float>(chromosomeLength);
@@ -14,7 +14,7 @@ Individual::Individual(int chromosomeLength){
     fitness = -1;
 }
 
-Individual::print(){
+void Individual::print(){
     
    cout << "Chromosome:\t";
    if(chromosome.size() > 0){
@@ -44,17 +44,42 @@ Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNorm
 
 vector<Individual> Brkga::createMutants(int number){
 
-    vector<Individual> mutants = vector<Individual>(number,chromosomeLength);
+    vector<Individual> mutants = vector<Individual>(number, chromosomeLength);
+
+    for(int i = 0; i < mutants.size(); ++i){
+        mutants[i] = Individual(chromosomeLength);
+    }
+
 
 #ifdef VCREATEMUTANTS
 
     cout << endl << "[VERBOSE MUTANT CREATION]" << endl;
 
-    for(int i = 0; i < mutants.size(); ++i)
+    for(int i = 0; i < mutants.size(); ++i){
         cout << "[MUTANT " << i << " ]" << endl;
         mutants[i].print();
+    }
 #endif
 
     return mutants;
 
 }
+
+
+vector<int> run(int numIterations);
+
+    vector<int> getBest();
+
+
+    vector<Individual> createMutants(int number);
+
+    vector<Individual> rankIndividuals(vector<Individual> population);
+    vector<Individual> assignFitness(vector<Individual> population);
+
+    vector<Individual> createNewGeneration(vector<Individual> population);
+    vector<Individual> getElite(vector<Individual> population);
+    vector<Individual> getNormies(vector<Individual> population);
+
+    vector<Individual> crossoverNormies(vector<Individual> elite, vector<Individual> normies, int numRemixed);
+
+    Individual crossoverNormie(Individual elite, Individual normie);
