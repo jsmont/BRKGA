@@ -9,10 +9,11 @@ typedef float (*FitnessFunction)(vector<float>);
 typedef struct Individual{
     vector<float> chromosome;
     float fitness;
-    //Individual();
+    Individual();
     Individual(int chromosomeLength);
     void print();
-    bool operator>(const Individual& other) const;
+    bool operator<(const Individual& other) const;
+
 } Individual;
 
 class Brkga {
@@ -44,13 +45,13 @@ private:
     vector<Individual> assignFitness(vector<Individual> population);
 
     vector<Individual> createNewGeneration(vector<Individual> population);
-/*    vector<Individual> getElite(vector<Individual> population);
+    vector<Individual> getElite(vector<Individual> population);
     vector<Individual> getNormies(vector<Individual> population);
 
     vector<Individual> crossoverNormies(vector<Individual> elite, vector<Individual> normies, int numRemixed);
 
     Individual crossoverNormie(Individual elite, Individual normie);
-*/
+
     float getBestFitness(vector<Individual> population);
 
     void inspectPopulation(vector<Individual> population);
