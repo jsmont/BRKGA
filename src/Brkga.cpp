@@ -40,13 +40,14 @@ bool Individual::operator<(const Individual& other) const{
     return fitness < other.fitness;
 }
 
-Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessFunction fitness){
+Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessModel* model){
 
     this->chromosomeLength = chromosomeLength;
     this->numElite = numElite;
     this->numNormies = numNormies;
     this->ro = ro;
-    this->fitness = fitness;
+
+    this->model = model;
 
     this->population = createMutants(populationSize);
 
@@ -115,7 +116,7 @@ vector<Individual> Brkga::assignFitness(vector<Individual> population){
         /*stringstream st;
         st<< "[ OPENMP TEST ]\t thread " << omp_get_thread_num() << endl;
         cout << st.str();*/
-        population[i].fitness = this->fitness(population[i].chromosome);
+        population[i].fitness = this->model->getFitness(population[i].chromosome);
 
     }
 
@@ -240,5 +241,19 @@ void Brkga::inspectPopulation(vector<Individual> population){
         population[i].print();
 
     }
+
+}
+
+void Brkga::printChromosome(vector<float> chromosome){
+
+    cout << "[ ";
+
+    if(chromosome.size() > 0){
+        cout << chromosome[0];
+        for(int i = 1; i < chromosome.size(); ++i){
+            cout << ",\t" << chromosome[i];
+        }
+    }
+    cout << " ]" << endl;
 
 }

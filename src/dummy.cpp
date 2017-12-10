@@ -2,16 +2,7 @@
 using namespace std;
 
 #include "Brkga.h"
-
-float fitness(vector<float> chromosome){
-    float sum = 0;
-    
-    for(int i = 0; i < chromosome.size(); ++i){
-        sum += i*chromosome[i];
-    }
-
-    return sum;
-}
+#include "DummyModel.h"
 
 int main(){
     
@@ -24,7 +15,9 @@ int main(){
     int remainingIterations = 10000;
     int batch = remainingIterations/100;
 
-    Brkga instance = Brkga(chromosomeLength, populationSize, numElite, numNormies, ro, fitness);
+    FitnessModel* model = new DummyModel();
+
+    Brkga instance = Brkga(chromosomeLength, populationSize, numElite, numNormies, ro, model);
 
     while (remainingIterations > batch){
         float fitness = instance.run(batch);
@@ -34,4 +27,9 @@ int main(){
 
     float fitness = instance.run(remainingIterations);
     cout << "Remaining iterations: 0\tFitness: " << fitness << endl;
+
+    vector<float> bestChromosome = instance.getBest();
+
+    Brkga::printChromosome(bestChromosome);
+
 }

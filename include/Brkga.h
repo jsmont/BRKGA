@@ -2,9 +2,8 @@
 #define __BRKGA__
 
 #include<vector>
+#include <iostream>
 using namespace std;
-
-typedef float (*FitnessFunction)(vector<float>); 
 
 typedef struct Individual{
     vector<float> chromosome;
@@ -16,6 +15,13 @@ typedef struct Individual{
 
 } Individual;
 
+class FitnessModel {
+
+public:
+    virtual float getFitness(vector<float> chromosome) = 0;
+
+};
+
 class Brkga {
 
     int numIterations;
@@ -25,17 +31,19 @@ class Brkga {
     int numNormies;
     float ro;
 
-    FitnessFunction fitness;
+    FitnessModel* model;
     
     vector<Individual> population;
     
 public:
 
-    Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessFunction fitness);
+    Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessModel* model);
 
     float run(int numIterations);
 
     vector<float> getBest();
+
+    static void printChromosome(vector<float> chromosome);
 
 private:
 
