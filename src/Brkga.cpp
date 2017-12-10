@@ -2,6 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <omp.h>
+#include <sstream>
 
 Individual::Individual(){
     fitness = -1;
@@ -39,7 +41,7 @@ bool Individual::operator<(const Individual& other) const{
 }
 
 Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessFunction fitness){
-    
+
     this->chromosomeLength = chromosomeLength;
     this->numElite = numElite;
     this->numNormies = numNormies;
@@ -107,8 +109,12 @@ vector<Individual> Brkga::rankIndividuals(vector<Individual> population){
 
 vector<Individual> Brkga::assignFitness(vector<Individual> population){
 
+#pragma omp parallel for schedule(static)
     for(int i = 0; i < population.size(); ++i){
     
+        /*stringstream st;
+        st<< "[ OPENMP TEST ]\t thread " << omp_get_thread_num() << endl;
+        cout << st.str();*/
         population[i].fitness = this->fitness(population[i].chromosome);
 
     }
