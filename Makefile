@@ -16,7 +16,7 @@ OBJ = $(patsubst %,$(SDIR)/%,$(_OBJ))
 %.o:%.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(DEFINES)
 
-all: main
+all: dummy
 
 parallel: CFLAGS += -fopenmp
 parallel: $(OBJ)
