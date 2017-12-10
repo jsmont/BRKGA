@@ -31,3 +31,7 @@
 *.x
 *.out
 *.app
+
+# Google Drive
+
+*/*Icon*
