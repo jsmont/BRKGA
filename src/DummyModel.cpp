@@ -11,3 +11,7 @@ float DummyModel::getFitness(vector<float> chromosome){
 
     return sum;
 }
+
+int DummyModel::getChromosomeLength(){
+    return 5;
+}

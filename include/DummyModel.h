@@ -7,6 +7,7 @@ class DummyModel : virtual public FitnessModel {
 
 public:
     float getFitness(vector<float> chromosome);
+    int getChromosomeLength();
 
 };
 

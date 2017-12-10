@@ -6,10 +6,10 @@ INSTANCE=dummy
 
 SDIR=./src
 
-_DEPS = Brkga.h DummyModel.h
+_DEPS = Brkga.h DummyModel.h TasksToComputersModel.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = Brkga.o DummyModel.o
+_OBJ = Brkga.o DummyModel.o TasksToComputersModel.o
 OBJ = $(patsubst %,$(SDIR)/%,$(_OBJ))
 
 
@@ -23,10 +23,15 @@ parallel: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(DEFINES)
 
 dummy: INSTANCE = dummy
+dummy: src/dummy.o
 dummy: main
 
-main: $(OBJ) src/$(INSTANCE).o
-	$(CC) -o $(INSTANCE) $^ $(CFLAGS) $(DEFINES)
+tasksc: INSTANCE = tasks_to_computer
+tasksc: src/tasks_to_computer.o
+tasksc: main
+
+main: $(OBJ) 
+	$(CC) -o $(INSTANCE) src/$(INSTANCE).o $^ $(CFLAGS) $(DEFINES)
 
 .PHONY: clean
 

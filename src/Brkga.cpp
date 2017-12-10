@@ -40,9 +40,9 @@ bool Individual::operator<(const Individual& other) const{
     return fitness < other.fitness;
 }
 
-Brkga::Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessModel* model){
+Brkga::Brkga(int populationSize, int numElite, int numNormies, float ro, FitnessModel* model){
 
-    this->chromosomeLength = chromosomeLength;
+    this->chromosomeLength = model->getChromosomeLength();
     this->numElite = numElite;
     this->numNormies = numNormies;
     this->ro = ro;

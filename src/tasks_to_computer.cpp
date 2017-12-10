@@ -1,31 +1,31 @@
-
 #include<iostream>
 using namespace std;
 
 #include "Brkga.h"
-
-float fitness(vector<float> chromosome){
-    float sum = 0;
-    
-    for(int i = 0; i < chromosome.size(); ++i){
-        sum += i*chromosome[i];
-    }
-
-    return sum;
-}
+#include "TasksToComputersModel.h"
 
 int main(){
     
-    int chromosomeLength = 4;
-    int populationSize = 500;
-    int numElite = 10;
-    int numNormies = 390;
+    int populationSize = 5;
+    int numElite = 2;
+    int numNormies = 2;
     float ro = 0.7;
 
-    int remainingIterations = 10000;
+    int remainingIterations = 10;
     int batch = remainingIterations/100;
+    if(batch == 0) batch = 1;
 
-    Brkga instance = Brkga(chromosomeLength, populationSize, numElite, numNormies, ro, fitness, NULL);
+    TasksToComputersModel model = TasksToComputersModel();
+
+    model.addTask(500);
+    model.addTask(200);
+    model.addTask(300);
+
+    model.addComputer(700);
+    model.addComputer(200);
+    model.addComputer(300);
+
+    Brkga instance = Brkga(populationSize, numElite, numNormies, ro, &model);
 
     while (remainingIterations > batch){
         float fitness = instance.run(batch);
@@ -35,4 +35,10 @@ int main(){
 
     float fitness = instance.run(remainingIterations);
     cout << "Remaining iterations: 0\tFitness: " << fitness << endl;
+
+    vector<float> bestChromosome = instance.getBest();
+
+    Brkga::printChromosome(bestChromosome);
+
+    model.printSolution(bestChromosome);
 }

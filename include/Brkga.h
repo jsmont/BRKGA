@@ -19,6 +19,7 @@ class FitnessModel {
 
 public:
     virtual float getFitness(vector<float> chromosome) = 0;
+    virtual int getChromosomeLength() = 0;
 
 };
 
@@ -37,7 +38,7 @@ class Brkga {
     
 public:
 
-    Brkga(int chromosomeLength, int populationSize, int numElite, int numNormies, float ro, FitnessModel* model);
+    Brkga(int populationSize, int numElite, int numNormies, float ro, FitnessModel* model);
 
     float run(int numIterations);
 

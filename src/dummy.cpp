@@ -6,7 +6,6 @@ using namespace std;
 
 int main(){
     
-    int chromosomeLength = 4;
     int populationSize = 500;
     int numElite = 10;
     int numNormies = 390;
@@ -17,7 +16,7 @@ int main(){
 
     FitnessModel* model = new DummyModel();
 
-    Brkga instance = Brkga(chromosomeLength, populationSize, numElite, numNormies, ro, model);
+    Brkga instance = Brkga(populationSize, numElite, numNormies, ro, model);
 
     while (remainingIterations > batch){
         float fitness = instance.run(batch);
