@@ -3,20 +3,6 @@
 #include <iostream>
 using namespace std;
 
-void printVector(vector<int> v){
-
-    cout << "[ ";
-    if(v.size() > 0) {
-        cout << v[0];
-        for(int i = 1; i < v.size(); ++i){
-            cout << ",\t" << v[i] ;
-        }
-    }
-
-    cout << " ]"<<endl;
-
-}
-
 TasksToComputersModel::TasksToComputersModel(){
     tasks = vector<int>(0);
     computers = vector<int>(0);
@@ -107,7 +93,7 @@ vector<vector<bool>> TasksToComputersModel::decode(vector<float> chromosome){
 
     cout << "[REORDER VECTOR]" << endl; 
 
-    printVector(reorderComputers);
+    //printVector(reorderComputers);
 
     for(int i = computers.size(); i < computers.size() + tasks.size(); ++i){
 

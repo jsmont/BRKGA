@@ -185,6 +185,7 @@ vector<Individual> Brkga::crossoverNormies(vector<Individual> elite, vector<Indi
 
     vector<Individual> remixedNormies = vector<Individual>(numRemixed);
 
+#pragma omp parallel for schedule(static)
     for(int i = 0; i < remixedNormies.size(); ++i){
     
         Individual selectedElite = elite[rand() % elite.size()];

@@ -6,10 +6,10 @@ INSTANCE=dummy
 
 SDIR=./src
 
-_DEPS = Brkga.h DummyModel.h TasksToComputersModel.h
+_DEPS = Brkga.h DummyModel.h TasksToComputersModel.h NursesModel.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = Brkga.o DummyModel.o TasksToComputersModel.o
+_OBJ = Brkga.o DummyModel.o TasksToComputersModel.o NursesModel.o
 OBJ = $(patsubst %,$(SDIR)/%,$(_OBJ))
 
 
@@ -30,8 +30,16 @@ tasksc: INSTANCE = tasks_to_computer
 tasksc: src/tasks_to_computer.o
 tasksc: main
 
+nurses: INSTANCE = nurses
+nurses: CFLAGS += -fopenmp
+nurses: src/nurses.o
+nurses: main
+
 main: $(OBJ) 
 	$(CC) -o $(INSTANCE) src/$(INSTANCE).o $^ $(CFLAGS) $(DEFINES)
+
+generator: src/instance_generator.cpp
+	$(CC) -o $@ $<
 
 .PHONY: clean
 
