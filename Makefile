@@ -32,6 +32,7 @@ tasksc: main
 
 nurses: INSTANCE = nurses
 nurses: CFLAGS += -fopenmp
+nurses: CFLAGS += -lncurses
 nurses: src/nurses.o
 nurses: main
 

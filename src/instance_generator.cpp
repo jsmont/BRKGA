@@ -6,13 +6,13 @@
 using namespace std;
 
 /* Parameters */
-int nInstances = 10;
-int minNurses = 500;
+int nInstances = 100;
+int minNurses = 100;
 int maxNurses = 1000;
 int total_hours = 24;
 int minMinHours = 4;
-int maxMinHours = 10;
-int minMaxHours = 8;
+int maxMinHours = 6;
+int minMaxHours = 6;
 int maxMaxHours = 12;
 int minMaxConsec = 1;
 int maxMaxConsec = 6;
@@ -77,7 +77,7 @@ int main() {
 
 	while (i < nInstances) {
 		/* Open the file */
-		outFile[i].open((name + char('0' + i) + ".dat").c_str());
+		outFile[i].open((name + to_string(i) + ".dat").c_str());
 		
 		/*Intializes the dependent problem variables*/
 		initialize_input();
