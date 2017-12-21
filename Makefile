@@ -1,6 +1,6 @@
 IDIR =./include
 CC=g++-7
-CFLAGS=-I$(IDIR) 
+CFLAGS=-I$(IDIR) -O3 -march=native -g
 DEFINES=
 INSTANCE=dummy
 

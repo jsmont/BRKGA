@@ -107,8 +107,7 @@ vector<vector<bool> > NursesModel::decode(vector<float> chromosome){
 
     for(int i = 0; i < nHours; ++i){
 
-        vector<float> reorderNursesWeights(chromosome.begin(), chromosome.begin()+nNurses);
-        chromosome.erase(chromosome.begin(), chromosome.begin()+nNurses);
+        vector<float> reorderNursesWeights(chromosome.begin()+(nNurses*i), chromosome.begin()+(nNurses*(i+1)));
 
         reorderNurses[i] = reorder(reorderNursesWeights);
     }

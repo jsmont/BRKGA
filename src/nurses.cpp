@@ -14,9 +14,6 @@ int main(int argc, char *argv[]){
     float ro = 0.7;
 
     int remainingIterations = 2000;
-    int iteration = 0;
-    int batch = remainingIterations/10000;
-    if(batch == 0) batch = 1;
 
     ofstream stats;
 
@@ -44,10 +41,16 @@ int main(int argc, char *argv[]){
                 cout << "NORMIES DEFINED TO " << atoi(argv[i+1]) << endl;
                 numNormies=atoi(argv[i+1]);
                 break;
+            case 'i':
+                cout << "ITERATIONS DEFINED TO " << atoi(argv[i+1]) << endl;
+                remainingIterations=atoi(argv[i+1]);
+                break;
         }
     }
 
-
+    int iteration = 0;
+    int batch = remainingIterations/10000;
+    if(batch == 0) batch = 1;
 
 #ifdef EXAMPLE
     cout << "USING EXAMPLE MODEL" << endl;

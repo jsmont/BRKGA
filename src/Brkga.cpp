@@ -113,9 +113,6 @@ vector<Individual> Brkga::assignFitness(vector<Individual> population){
 #pragma omp parallel for schedule(static)
     for(int i = 0; i < population.size(); ++i){
     
-        /*stringstream st;
-        st<< "[ OPENMP TEST ]\t thread " << omp_get_thread_num() << endl;
-        cout << st.str();*/
         population[i].fitness = this->model->getFitness(population[i].chromosome);
 
     }
