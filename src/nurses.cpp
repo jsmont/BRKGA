@@ -5,18 +5,19 @@ using namespace std;
 #include "NursesModel.h"
 
 int main(){
-    
-    int populationSize = 50;
+
+    int populationSize = 40;
     int numElite = 5;
-    int numNormies = 30;
+    int numNormies = 25;
     float ro = 0.7;
 
-    int remainingIterations = 2000;
-    int batch = remainingIterations/100;
+    int remainingIterations = 20000;
+    int batch = remainingIterations/10000;
     if(batch == 0) batch = 1;
 
 #ifdef EXAMPLE
-    vector<int> demmand = {40, 35, 31, 19, 12, 32, 1, 34, 2, 51};
+    static const int arr[] = {40, 35, 31, 19, 12, 32, 1, 34, 2, 51};
+    vector<int> demmand(arr, arr + sizeof(arr) / sizeof(arr[0]) );
 
     NursesModel model = NursesModel(150, demmand.size(), demmand, 2, 3, 2, 4);
 #else
@@ -48,7 +49,7 @@ int main(){
 
     vector<float> bestChromosome = instance.getBest();
 
-    Brkga::printChromosome(bestChromosome);
+    //Brkga::printChromosome(bestChromosome);
 
     model.printSolution(bestChromosome);
 }

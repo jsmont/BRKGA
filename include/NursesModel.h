@@ -20,13 +20,13 @@ public:
     int getChromosomeLength();
 
     //Returns matrix of assigned[computer][task]
-    vector<vector<bool>> decode(vector<float> chromosome);
+    vector<vector<bool> > decode(vector<float> chromosome);
 
     void printSolution(vector<float> chromosome);
 
 private:
 
-    int isFeasible(vector<vector<bool>> partial_solution, int h, int n);
+    int isFeasible(vector<vector<bool> > partial_solution, int h, int n);
     vector<int> reorder(vector<float> weigths);
     void r_reorder(vector<float> &weigths, vector<int> &order, int begin, int end);
 

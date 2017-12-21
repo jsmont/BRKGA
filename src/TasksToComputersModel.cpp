@@ -32,7 +32,7 @@ int TasksToComputersModel::getChromosomeLength(){
 
 float TasksToComputersModel::getFitness(vector<float> chromosome){
 
-    vector<vector<bool>> solution = decode(chromosome);
+    vector<vector<bool> > solution = decode(chromosome);
 
     float fitness = 0;
 
@@ -68,9 +68,9 @@ float TasksToComputersModel::getFitness(vector<float> chromosome){
 
 }
 
-vector<vector<bool>> TasksToComputersModel::decode(vector<float> chromosome){
+vector<vector<bool> > TasksToComputersModel::decode(vector<float> chromosome){
 
-    vector<vector<bool>> assignments = vector<vector<bool>>(computers.size(), vector<bool>(tasks.size(), false));
+    vector<vector<bool> > assignments = vector<vector<bool> >(computers.size(), vector<bool>(tasks.size(), false));
 
     vector<int> remainingTasks = vector<int>(tasks.size());
     for(int i = 0; i < tasks.size(); ++i) remainingTasks[i] = i;
@@ -147,7 +147,7 @@ void TasksToComputersModel::printSolution(vector<float> chromosome){
 
     vector <int> computer_loads = vector<int>(computers.size(), 0);
 
-    vector<vector<bool>> solution = decode(chromosome);
+    vector<vector<bool> > solution = decode(chromosome);
 
     for( int i = 0; i < solution.size(); ++i){
     

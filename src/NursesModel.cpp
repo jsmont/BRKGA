@@ -60,7 +60,7 @@ NursesModel::NursesModel(int nNurses, int nHours, vector<int> demmand, int minHo
 
 float NursesModel::getFitness(vector<float> chromosome){
 
-    vector<vector<bool>> solution = decode(chromosome);
+    vector<vector<bool> > solution = decode(chromosome);
     vector<bool> nworks = vector<bool>(nNurses, false);
     int nursesUsed = 0;
     int satisfiedHours = 0;
@@ -88,9 +88,9 @@ int NursesModel::getChromosomeLength(){
 }
 
 //Returns matrix of assigned[computer][task]
-vector<vector<bool>> NursesModel::decode(vector<float> chromosome){
+vector<vector<bool> > NursesModel::decode(vector<float> chromosome){
 
-    vector<vector<bool>> partial_solution = vector<vector<bool>>(nHours, vector<bool>(nNurses, false));
+    vector<vector<bool> > partial_solution = vector<vector<bool> >(nHours, vector<bool>(nNurses, false));
 
     vector<float> reorderHoursWeigths(chromosome.begin(), chromosome.begin()+nHours);
     chromosome.erase(chromosome.begin(), chromosome.begin()+nHours);
@@ -103,7 +103,7 @@ vector<vector<bool>> NursesModel::decode(vector<float> chromosome){
     printVector(reorderHours);
 #endif
 
-    vector<vector<int>> reorderNurses(nHours);
+    vector<vector<int> > reorderNurses(nHours);
 
     for(int i = 0; i < nHours; ++i){
 
@@ -140,7 +140,7 @@ vector<vector<bool>> NursesModel::decode(vector<float> chromosome){
 
 void NursesModel::printSolution(vector<float> chromosome){
 
-    vector <vector<bool>> solution = decode(chromosome);
+    vector <vector<bool> > solution = decode(chromosome);
 
 
     for(int h = 0; h < nHours; ++h){
@@ -167,6 +167,7 @@ void NursesModel::printSolution(vector<float> chromosome){
     }
 
     cout << endl;
+    cout << endl << "Fitness: " << getFitness(chromosome) << endl;
 
 }
 
@@ -182,7 +183,7 @@ void NursesModel::printSolution(vector<float> chromosome){
 #define CONTROL(s)
 #endif
 
-int NursesModel::isFeasible(vector<vector<bool>> partial_solution, int h, int n){
+int NursesModel::isFeasible(vector<vector<bool> > partial_solution, int h, int n){
 
     bool feasible = true;
 

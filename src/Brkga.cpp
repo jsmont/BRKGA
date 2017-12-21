@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
-#include <omp.h>
+//#include <omp.h>
 #include <sstream>
 
 Individual::Individual(){

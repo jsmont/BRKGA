@@ -17,7 +17,7 @@ public:
     int getChromosomeLength();
 
     //Returns matrix of assigned[computer][task]
-    vector<vector<bool>> decode(vector<float> chromosome);
+    vector<vector<bool> > decode(vector<float> chromosome);
 
     void printSolution(vector<float> chromosome);
 
