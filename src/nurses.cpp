@@ -88,4 +88,25 @@ int main(int argc, char *argv[]){
 
         fitness = instance.run(batch);
 
-       
+        remainingIterations-=batch;
+        iteration+= batch;
+    }
+    cout << "\rRUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
+    stats << iteration << "\t" << fitness << endl;
+
+    fitness = instance.run(remainingIterations);
+
+    iteration += remainingIterations;
+    cout << "\rRUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
+    stats << iteration << "\t" << fitness << endl;
+
+    cout << "\rEXECUTION FINISHED." << endl;
+    cout << "FINAL FITNESS " << fitness;
+
+    vector<float> bestChromosome = instance.getBest();
+
+    model.printSolution(bestChromosome);
+
+    stats.close();
+}
+

@@ -10,4 +10,6 @@ set style data lines
 set title "Fitness per iteration"
 set xlabel "Iteration"
 set ylabel "Fitness"
-plot "stats.dat" using 1:2 title 'Fitness' 
+FILES = system("ls -1 data/*.dat")
+LABELS = system("ls -1 data/*.dat | sed -e 's:data/::' -e 's:.dat::'")
+plot for [i=1:words(FILES)] word(FILES,i) using 1:2 title word(LABELS,i)
