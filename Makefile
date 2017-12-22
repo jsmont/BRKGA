@@ -1,6 +1,6 @@
 IDIR =./include
 CC=g++-7
-CFLAGS=-I$(IDIR) -O3 -march=native -g
+CFLAGS=-I$(IDIR) -O3 -march=native #-g
 DEFINES=
 INSTANCE=dummy
 
@@ -32,7 +32,6 @@ tasksc: main
 
 nurses: INSTANCE = nurses
 nurses: CFLAGS += -fopenmp
-nurses: CFLAGS += -lncurses
 nurses: src/nurses.o
 nurses: main
 

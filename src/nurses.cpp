@@ -77,16 +77,17 @@ int main(int argc, char *argv[]){
 
 #endif
 
-    Brkga instance = Brkga(populationSize, numElite, numNormies, ro, &model);
-
     cout << "TOTAL GENERATIONS " << remainingIterations << endl;
 
-    cout << "STARTING EXECUTION";
+    cout << "STARTING EXECUTION" << endl;
+
+    Brkga instance = Brkga(populationSize, numElite, numNormies, ro, &model);
+
 
     float fitness = instance.run(0);
 
     while (remainingIterations > batch){
-        cout << "\rRUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
+        cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
         stats << iteration << "\t" << fitness << endl;
 
         fitness = instance.run(batch);
