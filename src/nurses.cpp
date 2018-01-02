@@ -79,15 +79,14 @@ int main(int argc, char *argv[]){
 
     cout << "TOTAL GENERATIONS " << remainingIterations << endl;
 
-    cout << "STARTING EXECUTION" << endl;
-
     Brkga instance = Brkga(populationSize, numElite, numNormies, ro, &model);
 
+    cout << "STARTING EXECUTION" << endl;
 
     float fitness = instance.run(0);
 
     while (remainingIterations > batch){
-        cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
+        cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << endl;
         stats << iteration << "\t" << fitness << endl;
 
         fitness = instance.run(batch);
@@ -95,17 +94,17 @@ int main(int argc, char *argv[]){
         remainingIterations-=batch;
         iteration+= batch;
     }
-    cout << "\rRUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
+    cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << endl;
     stats << iteration << "\t" << fitness << endl;
 
     fitness = instance.run(remainingIterations);
 
     iteration += remainingIterations;
-    cout << "\rRUNNING GENERATION " << iteration << " WITH FITNESS " << fitness;
+    cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << endl;
     stats << iteration << "\t" << fitness << endl;
 
     cout << "\rEXECUTION FINISHED." << endl;
-    cout << "FINAL FITNESS " << fitness;
+    cout << "FINAL FITNESS " << fitness << endl;
 
     vector<float> bestChromosome = instance.getBest();
 
