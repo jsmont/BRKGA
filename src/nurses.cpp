@@ -86,7 +86,7 @@ int main(int argc, char *argv[]){
     float fitness = instance.run(0);
 
     while (remainingIterations > batch){
-        cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << endl;
+        cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << " AND NURSES " << (int)fitness/100 <<  endl;
         stats << iteration << "\t" << fitness << endl;
 
         fitness = instance.run(batch);

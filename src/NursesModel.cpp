@@ -1,6 +1,7 @@
 #include "NursesModel.h"
 
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 void printVector(vector<int> v){
@@ -61,7 +62,7 @@ NursesModel::NursesModel(int nNurses, int nHours, vector<int> demmand, int minHo
 float NursesModel::getFitness(vector<float> chromosome){
 
     vector<vector<bool> > solution = decode(chromosome);
-    vector<bool> nworks = vector<bool>(nNurses, false);
+    vector<int> nworks = vector<int>(nNurses, 0);
     int nursesUsed = 0;
     int satisfiedHours = 0;
 
@@ -70,8 +71,8 @@ float NursesModel::getFitness(vector<float> chromosome){
         for(int j = 0; j < solution[i].size(); ++j){
             if(solution[i][j]){
                 count++;
-                nursesUsed += !nworks[j];
-                nworks[j] = true;
+                nursesUsed += (nworks[j]==0);
+                nworks[j]++;
             }
         }
 
@@ -79,7 +80,26 @@ float NursesModel::getFitness(vector<float> chromosome){
 
     }
 
-    return nursesUsed + nNurses*(nHours - satisfiedHours);
+
+    float avg = 0;
+    for(int i = 0; i < nworks.size(); ++i){
+        avg += ((float)nworks[i])/(float)nursesUsed;
+    }
+
+    float sq_sum = 0;
+
+    for(int i = 0; i < nworks.size(); ++i){
+        if(nworks[i] != 0)
+            sq_sum += (nworks[i] - avg)*(nworks[i] - avg);
+    }
+
+    float std = sq_sum/nursesUsed;
+
+    float max_std = (maxHours/2)*(maxHours/2);
+
+    float normalized_std = std/max_std;
+
+    return 100*(1-normalized_std) + 100*(nursesUsed + nNurses*(nHours - satisfiedHours));
 
 }
 
@@ -167,6 +187,7 @@ void NursesModel::printSolution(vector<float> chromosome){
 
     cout << endl;
     cout << endl << "Fitness: " << getFitness(chromosome) << endl;
+    cout << endl << "Nurses used: " << (int)getFitness(chromosome)/100 << endl;
 
 }
 
@@ -232,10 +253,15 @@ int NursesModel::isFeasible(vector<vector<bool> > partial_solution, int h, int n
     CONTROL("INVALID PRESENCE HOURS");
 
     if(presence > totalHours){
+        int partial = 0;
         for(int i = firstHour+1; i < lastHour && feasible; ++i){
 
             if(partial_solution[i][n] == false && partial_solution[i-1][n] == false)
-                invalidRests++;
+                partial++;
+            else {
+                invalidRests += (partial+1)/2;
+                partial = 0;
+            }
 
         }
 
