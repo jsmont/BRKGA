@@ -151,6 +151,7 @@ vector<vector<bool> > NursesModel::decode(vector<float> chromosome){
                 requiredNurses--;
             }
         }
+        //cout << "H: " << h << "\tD: " << demmand[h]  << "\tS: "<< requiredNurses << endl;
     }
 
     return partial_solution;
@@ -197,13 +198,14 @@ void NursesModel::printSolution(vector<float> chromosome){
         cout << "maxPresence: " << maxPresence << "\tmaxHours: " << maxHours <<  "\tmaxConsec: " << maxConsec << endl;\
         cout << "Presence: " << presence << "\ttotalHours: " << totalHours << "\tinvalidRests: " << invalidRests << endl;\
         cout << s << endl;\
+        partial_solution[h][n] = false;\
         return feasible;\
     }
 #else
 #define CONTROL(s)
 #endif
 
-int NursesModel::isFeasible(vector<vector<bool> > partial_solution, int h, int n){
+int NursesModel::isFeasible(vector<vector<bool> > &partial_solution, int h, int n){
 
     bool feasible = true;
 
@@ -258,19 +260,26 @@ int NursesModel::isFeasible(vector<vector<bool> > partial_solution, int h, int n
 
             if(partial_solution[i][n] == false && partial_solution[i-1][n] == false)
                 partial++;
-            else {
+            else if(partial != 0) {
+                if(partial_solution[i-1][n] == false){
+
+                    int consecHours = 1;
+                    for(int j = i; j <= lastHour && partial_solution[j][n]; ++j)
+                        consecHours++;
+                    if(consecHours > maxConsec) feasible = false;
+
+                }
                 invalidRests += (partial+1)/2;
                 partial = 0;
             }
 
         }
 
+        CONTROL("INVALID REST + CONSEC HOURS")
 
         feasible &= (invalidRests <= (maxHours - totalHours));
         CONTROL("INVALID REST HOURS V1");
-        feasible &= (presence / maxConsec <= (presence - totalHours - invalidRests));
 
-        CONTROL("INVALID REST HOURS V2");
     }
 
 #ifdef DFEASIBLE
@@ -278,6 +287,7 @@ int NursesModel::isFeasible(vector<vector<bool> > partial_solution, int h, int n
         cout << "VALID" << endl;
     }
 #endif
+    partial_solution[h][n] = false;
 
     return feasible;
 

@@ -50,8 +50,8 @@ private:
 
     vector<Individual> createMutants(int number);
 
-    vector<Individual> rankIndividuals(vector<Individual> population);
-    vector<Individual> assignFitness(vector<Individual> population);
+    void rankIndividuals(vector<Individual> &population);
+    void assignFitness(vector<Individual> &population);
 
     vector<Individual> createNewGeneration(vector<Individual> population);
     vector<Individual> getElite(vector<Individual> population);
@@ -61,9 +61,9 @@ private:
 
     Individual crossoverNormie(Individual elite, Individual normie);
 
-    float getBestFitness(vector<Individual> population);
+    float getBestFitness(vector<Individual> &population);
 
-    void inspectPopulation(vector<Individual> population);
+    void inspectPopulation(vector<Individual> &population);
     
 };
 

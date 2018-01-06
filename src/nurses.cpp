@@ -45,6 +45,10 @@ int main(int argc, char *argv[]){
                 cout << "ITERATIONS DEFINED TO " << atoi(argv[i+1]) << endl;
                 remainingIterations=atoi(argv[i+1]);
                 break;
+            case 'r':
+                cout << "RO DEFINED TO " << atof(argv[i+1]) << endl;
+                ro=atof(argv[i+1]);
+                break;
         }
     }
 

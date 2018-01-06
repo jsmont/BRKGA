@@ -26,7 +26,7 @@ public:
 
 private:
 
-    int isFeasible(vector<vector<bool> > partial_solution, int h, int n);
+    int isFeasible(vector<vector<bool> > &partial_solution, int h, int n);
     vector<int> reorder(vector<float> weigths);
     void r_reorder(vector<float> &weigths, vector<int> &order, int begin, int end);
 

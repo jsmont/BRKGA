@@ -51,7 +51,7 @@ Brkga::Brkga(int populationSize, int numElite, int numNormies, float ro, Fitness
 
     this->population = createMutants(populationSize);
 
-    this->population = rankIndividuals(this->population);
+    rankIndividuals(this->population);
 
 }
 
@@ -81,7 +81,7 @@ float Brkga::run(int numIterations){
     
         this->population = createNewGeneration(this->population);
 
-        this->population = rankIndividuals(this->population);
+        rankIndividuals(this->population);
 
 #ifdef VITERATION
         cout << endl <<  "[VERBOSE ITERATION]" << endl;
@@ -94,9 +94,9 @@ float Brkga::run(int numIterations){
 }
 
 
-vector<Individual> Brkga::rankIndividuals(vector<Individual> population){
+void Brkga::rankIndividuals(vector<Individual> &population){
 
-    population = assignFitness(population);
+    assignFitness(population);
 
     sort(population.begin(), population.end());
 
@@ -105,10 +105,9 @@ vector<Individual> Brkga::rankIndividuals(vector<Individual> population){
     inspectPopulation(population);
 #endif
 
-    return population;
 }
 
-vector<Individual> Brkga::assignFitness(vector<Individual> population){
+void Brkga::assignFitness(vector<Individual> &population){
 
 #pragma omp parallel for schedule(static)
     for(int i = 0; i < population.size(); ++i){
@@ -121,8 +120,6 @@ vector<Individual> Brkga::assignFitness(vector<Individual> population){
     cout << endl <<  "[ VERBOSE FITNESS]" << endl;
     inspectPopulation(population);
 #endif 
-
-    return population;
 
 }
 
@@ -218,7 +215,7 @@ Individual Brkga::crossoverNormie(Individual elite, Individual normie){
     return remixed;
 }
 
-float Brkga::getBestFitness(vector<Individual> population){
+float Brkga::getBestFitness(vector<Individual> &population){
 
     return population[0].fitness;
 
@@ -230,7 +227,7 @@ vector<float> Brkga::getBest(){
 
 }
 
-void Brkga::inspectPopulation(vector<Individual> population){
+void Brkga::inspectPopulation(vector<Individual> &population){
 
     for(int i = 0; i < population.size(); ++i){
     
