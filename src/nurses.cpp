@@ -23,8 +23,9 @@ int main(int argc, char *argv[]){
     iterative.open("iterations.csv", ios_base::app);
     overtime.open("time.csv", ios_base::app);
 
-    iterative << "\n" << 0;
-    overtime << "\n" << 0;
+
+    iterative << endl << 0;
+    overtime << endl << 0;
 
     struct timeval start, itime;
 
