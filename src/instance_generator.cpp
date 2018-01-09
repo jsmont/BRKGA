@@ -6,15 +6,15 @@
 using namespace std;
 
 /* Parameters */
-int nInstances = 100;
-int minNurses = 100;
-int maxNurses = 1000;
+int nInstances = 10;
+int minNurses = 1000;
+int maxNurses = 1500;
 int total_hours = 24;
 int minMinHours = 4;
 int maxMinHours = 6;
 int minMaxHours = 6;
 int maxMaxHours = 12;
-int minMaxConsec = 1;
+int minMaxConsec = 4;
 int maxMaxConsec = 6;
 int minMaxPresence;
 int maxMaxPresence;

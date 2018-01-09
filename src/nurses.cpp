@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
+#include <sys/time.h>
 
 #include "Brkga.h"
 #include "NursesModel.h"
@@ -15,18 +16,21 @@ int main(int argc, char *argv[]){
 
     int remainingIterations = 2000;
 
-    ofstream stats;
+    ofstream iterative;
+    ofstream overtime;
 
-    int i = 1;
 
-    if(argc > 1){ 
-        i = 2;
-        stats.open(argv[1]);
-    } else {
-        stats.open("stats.dat");
-    }
+    iterative.open("iterations.csv", ios_base::app);
+    overtime.open("time.csv", ios_base::app);
 
-    for(i = i; i < argc-1; i+=2){
+    iterative << "\n" << 0;
+    overtime << "\n" << 0;
+
+    struct timeval start, itime;
+
+    gettimeofday(&start, NULL);
+
+    for(int i = 1; i < argc-1; i+=2){
 
         switch(argv[i][0]){
             case 'p':
@@ -91,7 +95,11 @@ int main(int argc, char *argv[]){
 
     while (remainingIterations > batch){
         cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << " AND NURSES " << (int)fitness/100 <<  endl;
-        stats << iteration << "\t" << fitness << endl;
+
+        gettimeofday(&itime, NULL);
+        iterative << "; " <<(int)(fitness)/100;
+        overtime << "; " << (itime.tv_sec - start.tv_sec); 
+
 
         fitness = instance.run(batch);
 
@@ -99,13 +107,19 @@ int main(int argc, char *argv[]){
         iteration+= batch;
     }
     cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << endl;
-    stats << iteration << "\t" << fitness << endl;
+        gettimeofday(&itime, NULL);
+        iterative << "; " << (int)fitness/100;
+        overtime << "; " << (itime.tv_sec - start.tv_sec); 
+
 
     fitness = instance.run(remainingIterations);
 
     iteration += remainingIterations;
     cout << "RUNNING GENERATION " << iteration << " WITH FITNESS " << fitness << endl;
-    stats << iteration << "\t" << fitness << endl;
+        gettimeofday(&itime, NULL);
+        iterative << "; " << (int)fitness/100;
+        overtime << "; " << (itime.tv_sec - start.tv_sec); 
+
 
     cout << "\rEXECUTION FINISHED." << endl;
     cout << "FINAL FITNESS " << fitness << endl;
@@ -114,6 +128,7 @@ int main(int argc, char *argv[]){
 
     model.printSolution(bestChromosome);
 
-    stats.close();
+    iterative.close();
+    overtime.close();
 }
 
